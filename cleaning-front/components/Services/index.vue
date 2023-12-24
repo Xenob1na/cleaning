@@ -1,16 +1,16 @@
 <template>
     <section id="Services">
-        <div class="w-full max-w-[1500px] mx-auto">
+        <div class="max-w-[1500px] mx-auto lg:mx-5">
             <div class="border border-[#CF881D] mt-[50px]">
-                <div class="flex justify-between items-center px-[80px] py-8">
+                <div class="flex justify-between items-center px-[80px] lg:px-5 lg:gap-2 py-8 lg2:grid lg2:grid-cols-1 lg2:gap-6">
                     <div>
                         <h5 class="text-black text-[24px] font-semibold">{{ Service.title }}</h5>
                     </div>
-                    <div class="max-w-[350px]">
+                    <div class="max-w-[350px] lg2:max-w-[900px]">
                         <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.description }}</p>
                     </div>
                     <div>
-                        <p class="text-black text-[36px] font-medium">
+                        <p class="text-black text-[36px] lg2:text-[26px] font-medium">
                             {{ Service.price }} руб.
                         </p>
                     </div>

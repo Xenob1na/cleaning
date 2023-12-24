@@ -1,6 +1,6 @@
 <template>
     <div id="layout-default">
-        <header class="max-w-[1500px] w-full mx-auto flex justify-between items-center mt-[40px]">
+        <header class="max-w-[1500px]  mx-auto flex justify-between items-center mt-[40px] lg:mx-5">
             <nuxt-link to="/">
                 <div class="flex items-center gap-1">
                     <span>
@@ -22,7 +22,7 @@
                     </p>
                 </div>
             </nuxt-link>
-            <nav>
+            <nav class="sm2:hidden">
                 <ul class="flex gap-[60px]">
                     <li v-for="item in nav" :key="item.name"
                         class="uppercase text-[#5A5A5A] text-[18px] font-medium leading-normal hover:text-black active:text-black focus:text-black">
@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </nav>
-            <div>
+            <div class="lg2:hidden">
                 <button
                     class="px-6 py-4 border rounded-[50px] border-[#CF881D] hover:bg-[#ffe9c8] transition duration-100 hover:transform hover:scale-105">
                     <div class="flex items-center gap-2">
@@ -41,11 +41,13 @@
                     </div>
                 </button>
             </div>
+            <BurgerBtn @click="OpenBurger" class="hidden sm:block" />
         </header>
+        <BurgerModal @close="CloseBurger" v-if="IsBurger" />
         <slot />
 
         <footer class="h-full w-full">
-            <div class="w-full max-w-[1500px] mx-auto grid grid-cols-3 gap-[200px]">
+            <div class="max-w-[1500px] mx-auto grid grid-cols-3 gap-[200px] lg:mx-5 md:grid md:grid-cols-2 md:gap-7 sm2:grid sm2:grid-cols-1">
                 <div>
                     <div class="flex items-center gap-1">
                         <span>
@@ -87,7 +89,7 @@
                 </div>
             </div>
             <div class="bg-black w-full mt-[60px]">
-                <p class="text-white max-w-[1500px] mx-auto py-[60px] text-[14px] font-normal leading-[180%]">© 2023
+                <p class="text-white lg:mx-5 max-w-[1500px] mx-auto py-[60px] text-[14px] font-normal leading-[180%]">© 2023
                     Cleaning Service. All Rights Reserved. With love by Elmous</p>
             </div>
         </footer>
@@ -95,6 +97,15 @@
 </template>
 
 <script setup lang="ts">
+const IsBurger = ref(false);
+
+function OpenBurger() {
+    IsBurger.value = true
+}
+
+function CloseBurger() {
+    IsBurger.value = false
+}
 
 const nav = ref([
     {

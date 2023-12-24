@@ -1,8 +1,8 @@
 <template>
-    <section class="w-full max-w-[1500px] mx-auto mt-[150px]" id="About">
-        <div class="flex justify-between">
-            <div>
-                <img src="/clen2.png" alt="Услуга по уборке помещений" class="h-[600px]">
+    <section class="max-w-[1500px] mx-auto mt-[150px] lg:mx-5" id="About">
+        <div class="flex justify-between gap-2">
+            <div class="lg2:hidden">
+                <img src="/clen2.png" alt="Услуга по уборке помещений" class="h-[600px] lg:h-[480px]">
             </div>
             <div class="max-w-[700px]">
                 <article

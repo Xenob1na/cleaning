@@ -1,6 +1,6 @@
 <template>
     <section class="mt-[140px]">
-        <div class="w-full max-w-[1500px] mx-auto">
+        <div class="max-w-[1500px] mx-auto lg:mx-5">
             <div class="max-w-[700px]">
                 <article
                     class="bg-clip-text text-transparent bg-gradient-to-br  from-[#737373] to-[#CF881D] text-[18px] uppercase">
