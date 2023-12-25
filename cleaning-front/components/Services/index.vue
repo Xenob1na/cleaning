@@ -4,18 +4,22 @@
             <div class="border border-[#CF881D] mt-[50px]">
                 <div class="flex justify-between items-center px-[80px] lg:px-5 lg:gap-2 py-8 lg2:grid lg2:grid-cols-1 lg2:gap-6">
                     <div>
-                        <h5 class="text-black text-[24px] font-semibold">{{ Service.title }}</h5>
+                        <h5 class="text-black text-[24px] font-semibold">{{ Service.services_title }}</h5>
                     </div>
                     <div class="max-w-[350px] lg2:max-w-[900px]">
-                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.description }}</p>
+                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.services_desc1 }}</p>
+                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.services_desc2 }}</p>
+                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.services_desc3 }}</p>
+                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.services_desc4 }}</p>
+                        <p class="text-[#5A5A5A] text-[16px] font-normal">{{ Service.services_desc5 }}</p>
                     </div>
                     <div>
                         <p class="text-black text-[36px] lg2:text-[26px] font-medium">
-                            {{ Service.price }} руб.
+                            {{ Service.services_price }} руб.
                         </p>
                     </div>
                     <div>
-                        <nuxt-link :to="`Services/detail-${Service.id}`">
+                        <nuxt-link :to="`Services/detail-${Service.services_id}`">
                             <button
                                 class="px-6 py-4 border rounded-[50px] border-[#CF881D] hover:bg-[#ffe9c8] transition duration-100 hover:transform hover:scale-105">
                                 <div class="flex items-center">
@@ -33,10 +37,14 @@
 
 <script setup lang="ts">
 interface Service {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
+    services_id: number;
+    services_title: string;
+    services_desc1: string;
+    services_desc2: string;
+    services_desc3: string;
+    services_desc4: string;
+    services_desc5: string;
+    services_price: number;
 }
 
 const props = defineProps<{

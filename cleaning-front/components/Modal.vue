@@ -16,14 +16,17 @@
                     <div>
                         <label for="adress" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Ваше имя</label>
                         <input name="task_title"
+                            v-model="form.buyers_name"
                             class="w-full rounded border bg-[#F7F7F8] px-4 py-3 text-gray-800 outline-none ring-[#CF881D] transition duration-100 focus:ring" />
                     </div>
                     <div>
                         <label for="adress" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Номер телефона</label>
                         <input name="task_title"
+                            v-model="form.buyers_phone"
                             class="w-full rounded border bg-[#F7F7F8] px-4 py-3 text-gray-800 outline-none ring-[#CF881D] transition duration-100 focus:ring" />
                     </div>
                     <button
+                        @click="submitCustomer"
                         class="block rounded-lg bg-[#CF881D] mt-5 px-8 py-4 text-center text-sm font-semibold text-white outline-none ring-[#CF881D] transition duration-100 md:text-base"
                         >Отправить</button>
                 </div>
@@ -37,4 +40,24 @@ import { useServicesStore } from "../store/services"
 import { storeToRefs } from "pinia";
 
 const { isCloseOverlay } = storeToRefs(useServicesStore())
+
+
+
+const form = reactive({
+    buyers_name: '',
+    buyers_phone: '',
+})
+
+const submitCustomer = async () => {
+    try {
+        await $fetch("https://backend-cleaning.vercel.app/api/buyers", {
+            method: "POST",
+            body: form,
+        });
+
+        isCloseOverlay.value = false
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>

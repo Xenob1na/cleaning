@@ -2,13 +2,39 @@
     <MainLayout>
         <section id="Services" class="mb-[150px]">
             <ServicesHead />
-            <Services v-for="service in services" :key="service.id" :Service="service" />
+            <ClientOnly>
+
+                <template #fallback>
+
+                    <div class="text-black mx-auto flex flex-col items-center justify-center">
+                        <Icon name="line-md:downloading-loop" size="50" color="black" />
+                        <div class="text-black">Загрузка данных...</div>
+                    </div>
+                </template>
+            </ClientOnly>
+
+            <div v-if="isLoading">
+                <div class="text-black mx-auto flex flex-col items-center justify-center">
+                    <Icon name="line-md:downloading-loop" size="50" color="black" />
+                    <div class="text-black">Загрузка данных...</div>
+                </div>
+            </div>
+            <div v-else-if="isServices">
+                <Services v-for="Service in service" :key="Service.services_title" :Service="Service" />
+            </div>
         </section>
     </MainLayout>
 </template>
 
 <script setup lang="ts">
 import MainLayout from "../../layouts/MainLayout.vue"
+
+import { storeToRefs } from 'pinia';
+import { useServicesStore } from '../../store/services'
+
+const { getTask } = useServicesStore()
+const { services } = storeToRefs(useServicesStore())
+
 useSeoMeta({
     title: 'Услуги',
     ogTitle: 'Услуги',
@@ -19,35 +45,48 @@ useSeoMeta({
 })
 
 interface Service {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
+    services_id: number;
+    services_title: string;
+    services_desc1: string;
+    services_desc2: string;
+    services_desc3: string;
+    services_desc4: string;
+    services_desc5: string;
+    services_price: number;
 }
 
-const services = ref<Service[]>([])
+const service = ref<Service[]>([])
+const isServices = ref(false)
+const isLoading = ref(false)
 
-onBeforeMount(() => {
-    services.value = [
-        {
-            id: 1,
-            title: 'Мойка окон',
-            description: 'Отполируем стекла, Вымоем подоконники, рамы, откосы, сливы, замки, ручки, Отмоем москитные сетки',
-            price: 800,
-        },
-        {
-            id: 2,
-            title: 'Химчистка ковров и мебели',
-            description: 'Мебель: Стул без тканевой спинки,Кресло не раскладное. Ковры: Короткий ворс, Длинный ворс',
-            price: 1000,
-        },
-        {
-            id: 3,
-            title: 'Генеральная уборка',
-            description: 'Обеспылим все поверхности мебели и предметы интерьера, Пропылесосим ковры и мебель, Вымоем полы и плинтуса, Отмоем розетки, выключатели, кондиционеры, радиаторы',
-            price: 1500,
-        }
-    ]
+onMounted(async () => {
+    isLoading.value = true
+    try {
+        await getTask()
+        isLoading.value = false
+    } catch (error) {
+        console.log(error)
+        isLoading.value = false
+    }
 })
 
+onBeforeMount(() => {
+    watchEffect(() => {
+        service.value = services.value
+        if (services && services.value.length >= 1) {
+            isServices.value = true
+        } else {
+            isServices.value = false
+        }
+    })
+})
+
+watch(() => service.value, () => {
+    service.value = services.value
+    if (services && services.value.length >= 1) {
+        isServices.value = true
+    } else {
+        isServices.value = false
+    }
+}, { deep: true })
 </script>

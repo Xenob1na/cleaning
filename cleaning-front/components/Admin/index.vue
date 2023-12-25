@@ -10,6 +10,9 @@
                         Номер телефона
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Дата заявки
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Действия
                     </th>
                 </tr>
@@ -18,11 +21,14 @@
                 <tr class="bg-white border-b rounded-[10px]  hover:bg-gray-50">
                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
                         <div class="ps-3">
-                            <div class="text-base font-semibold">{{ items.name }}</div>
+                            <div class="text-base font-semibold">{{ items.buyers_name }}</div>
                         </div>
                     </th>
                     <td class="px-6 py-4">
-                        {{ items.phone }}
+                        {{ items.buyers_phone }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ items.created_date }}
                     </td>
                     <td class="px-6 py-4 flex gap-2">
                         <button type="button"
@@ -39,13 +45,14 @@
 
 <script setup lang="ts">
 
-interface User {
-    id: number;
-    name: string;
-    phone: string;
+interface Buyers {
+    buyers_id: number;
+    buyers_name: string;
+    buyers_phone: string;
+    created_date: any;
 }
 
 const props = defineProps<{
-    items: User
+    items: Buyers
 }>()
 </script>

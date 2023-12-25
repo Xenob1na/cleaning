@@ -1,31 +1,36 @@
 <template>
     <MainLayout>
+        <ClientOnly>
+
+            <template #fallback>
+
+                <div class="text-black mx-auto flex flex-col items-center justify-center">
+                    <Icon name="line-md:downloading-loop" size="50" color="black" />
+                    <div class="text-black">Загрузка данных...</div>
+                </div>
+            </template>
+        </ClientOnly>
+
+        <div v-if="isLoading">
+            <div class="text-black mx-auto flex flex-col items-center justify-center">
+                <Icon name="line-md:downloading-loop" size="50" color="black" />
+                <div class="text-black">Загрузка данных...</div>
+            </div>
+        </div>
         <section class="max-w-[1300px] mx-auto flex justify-between mt-[150px] mb-[150px] lg:mx-5">
             <div>
-                <h3 class="text-black text-[44px] leading-[130%] font-bold">Генеральная уборка</h3>
+                <h3 class="text-black text-[44px] leading-[130%] font-bold">{{ form.services_title }}</h3>
                 <div class="max-w-[600px] mt-8 md:max-w-[900px]">
                     <ul class="list-image-[url(/check1.png)] list-inside">
-                        <li class="font-medium text-[18px] leading-7  text-[#5A5A5A] tracking-[0.8px]">Обеспылим все
-                            поверхности мебели и
-                            предметы интерьера</li>
-                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">Вымоем
-                            межкомнатные
-                            двери и дверные
-                            ручки</li>
-                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">Отмоем розетки,
-                            выключатели,
-                            кондиционеры, радиаторы</li>
-                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">Вымоем
-                            межкомнатные
-                            двери и дверные
-                            ручки</li>
-                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">Отмоем розетки,
-                            выключатели,
-                            кондиционеры, радиаторы</li>
+                        <li class="font-medium text-[18px] leading-7  text-[#5A5A5A] tracking-[0.8px]">{{ form.services_desc1 }}</li>
+                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">{{ form.services_desc2 }}</li>
+                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">{{ form.services_desc3 }}</li>
+                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">{{ form.services_desc4 }}</li>
+                        <li class="font-medium text-[18px] leading-7 text-[#5A5A5A] tracking-[0.8px] mt-5">{{ form.services_desc5 }}</li>
                     </ul>
                     <div>
                         <p class="text-black text-[36px] font-medium mt-[45px]">
-                            Ценна за услугу 800 руб.
+                            Ценна за услугу {{ form.services_price }} руб.
                         </p>
                     </div>
                     <button @click="isCloseOverlay = true"
@@ -53,5 +58,48 @@ import { storeToRefs } from "pinia";
 
 const { isCloseOverlay } = storeToRefs(useServicesStore())
 
-const route = useRoute()
+interface Service {
+    services_id: number;
+    services_title: string;
+    services_desc1: string;
+    services_desc2: string;
+    services_desc3: string;
+    services_desc4: string;
+    services_desc5: string;
+    services_price: number;
+}
+
+
+const isLoading = ref(false);
+const route = useRoute();
+
+const form = reactive({
+    services_title: '',
+    services_desc1: '',
+    services_desc2: '',
+    services_desc3: '',
+    services_desc4: '',
+    services_desc5: '',
+    services_price: 0
+})
+
+
+const fetchData = async () => {
+    try {
+        const result = await $fetch('https://backend-cleaning.vercel.app/api/services/' + route.params.id);
+        const data = result as Service;
+
+        form.services_title = data.services_title;
+        form.services_desc1 = data.services_desc1;
+        form.services_desc2 = data.services_desc2;
+        form.services_desc3 = data.services_desc3;
+        form.services_desc4 = data.services_desc4;
+        form.services_desc5 = data.services_desc5;
+        form.services_price = data.services_price;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+onMounted(() => fetchData())
 </script>
