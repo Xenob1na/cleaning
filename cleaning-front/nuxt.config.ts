@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', 'nuxt-simple-sitemap', '@nuxtjs/robots', 'yandex-metrika-module-nuxt3'],
   yandexMetrika: {
     id: '95995508',
+    webvisor: true,
   },
   site: {
     url: 'https://cleaning-plum.vercel.app/',
