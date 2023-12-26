@@ -29,6 +29,10 @@
 </template>
 
 <script setup lang="ts">
+  definePageMeta({
+    middleware: 'auth' 
+})
+
 import AdminLayout from '../../layouts/AdminLayout.vue'
 
 

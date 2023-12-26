@@ -48,13 +48,18 @@ const form = reactive({
     buyers_phone: '',
 })
 
+const clearData = () => {
+    form.buyers_name = ''
+    form.buyers_phone = ''
+}
+
 const submitCustomer = async () => {
     try {
         await $fetch("https://backend-cleaning.vercel.app/api/buyers", {
             method: "POST",
             body: form,
         });
-
+        clearData()
         isCloseOverlay.value = false
     } catch (error) {
         console.log(error);

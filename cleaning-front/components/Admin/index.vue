@@ -31,7 +31,7 @@
                         {{ items.created_date }}
                     </td>
                     <td class="px-6 py-4 flex gap-2">
-                        <button type="button"
+                        <button type="button" @click="deleteBuyer(items.buyers_id)"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-[10px] text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 flex items-center gap-2">
                             <Icon name="solar:trash-bin-trash-broken" size="20" />
                             <span>Удалить</span>
@@ -44,6 +44,9 @@
 </template>
 
 <script setup lang="ts">
+import { useBuyersStore } from '../../store/buyers'
+
+const { getBuyers } = useBuyersStore()
 
 interface Buyers {
     buyers_id: number;
@@ -55,4 +58,15 @@ interface Buyers {
 const props = defineProps<{
     items: Buyers
 }>()
+
+const deleteBuyer = async (id: number) => {
+    try {
+        await $fetch('https://backend-cleaning.vercel.app/api/buyers/' + id, {
+            method: 'DELETE'
+        })
+        await getBuyers()
+    } catch (error) {
+        console.log(error)
+    }
+}
 </script>
