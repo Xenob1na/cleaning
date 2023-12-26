@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', 'nuxt-simple-sitemap', '@nuxtjs/robots'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', 'nuxt-simple-sitemap', '@nuxtjs/robots', 'yandex-metrika-module-nuxt3'],
+  yandexMetrika: {
+    id: '95995508',
+  },
   site: {
     url: 'https://cleaning-plum.vercel.app/',
   },
